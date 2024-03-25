@@ -3,3 +3,7 @@ export function capitalize(string) {
   strArray[0] = strArray[0].toUpperCase();
   return strArray.join("");
 }
+
+export function reverseString(string) {
+  return string.split("").reverse().join("");
+}
