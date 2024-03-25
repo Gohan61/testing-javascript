@@ -48,3 +48,23 @@ export function caesarCipher(string, key) {
 
   return cipherString.join("");
 }
+
+export function analyzeArray(array) {
+  const object = {
+    average: undefined,
+    min: undefined,
+    max: undefined,
+    length: undefined,
+  };
+
+  object.average =
+    array.reduce((first, second) => first + second) / (array.length - 1);
+
+  object.min = array.sort((a, b) => a - b)[0];
+
+  object.max = array.sort((a, b) => b - a)[0];
+
+  object.length = array.length;
+
+  return object;
+}

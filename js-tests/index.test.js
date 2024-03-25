@@ -2,6 +2,7 @@ import { capitalize } from "./index.js";
 import { reverseString } from "./index.js";
 import { calculator } from "./index.js";
 import { caesarCipher } from "./index.js";
+import { analyzeArray } from "./index.js";
 
 test("Return only first letter capitalized", () => {
   expect(capitalize("herman")).toBe("Herman");
@@ -37,4 +38,20 @@ test("Return Ab2 to be ?!0 with key -2", () => {
 
 test("Return Ab2 to be de.5 with key 50", () => {
   expect(caesarCipher("Ab2", 50)).toBe("jk.");
+});
+
+test("Return average of array [1, 2, 3] to equal 2", () => {
+  expect(analyzeArray([1, 2, 3]).average).toBe(3);
+});
+
+test("Return minimun of array [10, 2, 50 to equal 2", () => {
+  expect(analyzeArray([10, 2, 50]).min).toBe(2);
+});
+
+test("Return maximum of array [10, 2, 50 to equal 50", () => {
+  expect(analyzeArray([10, 2, 50]).max).toBe(50);
+});
+
+test("Return length of array [10, 2, 50] to equal 3", () => {
+  expect(analyzeArray([10, 2, 50]).length).toBe(3);
 });
