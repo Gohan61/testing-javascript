@@ -14,7 +14,7 @@ test("Ship is sunk when times hit equals length of ship", () => {
     testShip.hit();
   }
   if (testShip.length === testShip.timesHit) {
-    testShip.sunk = true;
+    testShip.isSunk();
   }
   expect(testShip.sunk).toBe(true);
 });
