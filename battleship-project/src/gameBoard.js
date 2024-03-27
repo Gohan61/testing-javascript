@@ -1,4 +1,5 @@
-import { Ship } from ".";
+import { Ship, battleship, destroyer, submarine } from ".";
+import { carrier } from "./index.js";
 
 export class GameBoard {
   constructor() {
@@ -37,5 +38,33 @@ export class GameBoard {
       }
     }
     return true;
+  }
+
+  receiveAttack(x, y) {
+    if (this.gameBoard[x][y] !== 0) {
+      this.checkShipType(x, y);
+    } else {
+      this.gameBoard[x][y] = "x";
+    }
+  }
+
+  checkShipType(x, y) {
+    switch (true) {
+      case this.gameBoard[x][y] === 5:
+        carrier.hit();
+        break;
+      case this.gameBoard[x][y] === 4:
+        battleship.hit();
+        break;
+      case this.gameBoard[x][y] === 3:
+        cruiser.hit();
+        break;
+      case this.gameBoard[x][y] === 2:
+        submarine.hit();
+        break;
+      case this.gameBoard[x][y] === 1:
+        destroyer.hit();
+        break;
+    }
   }
 }

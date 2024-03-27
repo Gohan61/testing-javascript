@@ -1,4 +1,4 @@
-import { Ship } from "./index.js";
+import { Ship, battleship, carrier } from "./index.js";
 import { GameBoard } from "./gameBoard.js";
 
 test("Times hit to be less than length of ship", () => {
@@ -59,4 +59,18 @@ test("Check if ship is not placed on collision", () => {
   expect(gameBoardObj.gameBoard[0][6]).toBe(0);
   expect(gameBoardObj.gameBoard[0][4]).toBe(firstShip.length);
   expect(gameBoardObj.gameBoard[8][0]).toBe(0);
+});
+
+test("Check if ship is hit", () => {
+  const gameBoardObj = new GameBoard();
+  gameBoardObj.placeShip(0, 0, "horizontal", carrier.length);
+  gameBoardObj.receiveAttack(0, 0);
+  expect(carrier.timesHit).toBe(1);
+});
+
+test("Check if missed attack is registered", () => {
+  const gameBoardObj = new GameBoard();
+  gameBoardObj.placeShip(0, 0, "vertical", battleship.length);
+  gameBoardObj.receiveAttack(0, 1);
+  expect(gameBoardObj.gameBoard[0][1]).toBe("x");
 });
