@@ -1,9 +1,14 @@
-import { Ship, battleship, destroyer, submarine } from ".";
-import { carrier } from "./index.js";
+import { Ship } from ".";
+import { carrier, battleship, cruiser, destroyer, submarine } from "./index.js";
 
 export class GameBoard {
   constructor() {
     this.gameBoard = this.newGameboard();
+    this.carrier = new Ship(5);
+    this.battleship = new Ship(4);
+    this.cruiser = new Ship(3);
+    this.submarine = new Ship(2);
+    this.destroyer = new Ship(1);
   }
   newGameboard = () => {
     const array = [];
@@ -51,20 +56,32 @@ export class GameBoard {
   checkShipType(x, y) {
     switch (true) {
       case this.gameBoard[x][y] === 5:
-        carrier.hit();
+        this.carrier.hit();
         break;
       case this.gameBoard[x][y] === 4:
-        battleship.hit();
+        this.battleship.hit();
         break;
       case this.gameBoard[x][y] === 3:
-        cruiser.hit();
+        this.cruiser.hit();
         break;
       case this.gameBoard[x][y] === 2:
-        submarine.hit();
+        this.submarine.hit();
         break;
       case this.gameBoard[x][y] === 1:
-        destroyer.hit();
+        this.destroyer.hit();
         break;
+    }
+  }
+
+  checkIfAllShipsSunk() {
+    if (
+      this.carrier.isSunk() &&
+      this.battleship.isSunk() &&
+      this.cruiser.isSunk() &&
+      this.submarine.isSunk() &&
+      this.destroyer.isSunk()
+    ) {
+      return "All ships have sunk";
     }
   }
 }

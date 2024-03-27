@@ -1,4 +1,11 @@
-import { Ship, battleship, carrier } from "./index.js";
+import {
+  Ship,
+  battleship,
+  carrier,
+  cruiser,
+  destroyer,
+  submarine,
+} from "./index.js";
 import { GameBoard } from "./gameBoard.js";
 
 test("Times hit to be less than length of ship", () => {
@@ -63,14 +70,39 @@ test("Check if ship is not placed on collision", () => {
 
 test("Check if ship is hit", () => {
   const gameBoardObj = new GameBoard();
-  gameBoardObj.placeShip(0, 0, "horizontal", carrier.length);
+  gameBoardObj.placeShip(0, 0, "horizontal", gameBoardObj.carrier.length);
   gameBoardObj.receiveAttack(0, 0);
-  expect(carrier.timesHit).toBe(1);
+  expect(gameBoardObj.carrier.timesHit).toBe(1);
 });
 
 test("Check if missed attack is registered", () => {
   const gameBoardObj = new GameBoard();
-  gameBoardObj.placeShip(0, 0, "vertical", battleship.length);
+  gameBoardObj.placeShip(0, 0, "vertical", gameBoardObj.battleship.length);
   gameBoardObj.receiveAttack(0, 1);
   expect(gameBoardObj.gameBoard[0][1]).toBe("x");
+});
+
+test("Check if all ships sunk", () => {
+  const gameBoardObj = new GameBoard();
+  gameBoardObj.placeShip(0, 0, "horizontal", gameBoardObj.destroyer.length);
+  gameBoardObj.placeShip(1, 0, "horizontal", gameBoardObj.submarine.length);
+  gameBoardObj.placeShip(2, 0, "horizontal", gameBoardObj.cruiser.length);
+  gameBoardObj.placeShip(3, 0, "horizontal", gameBoardObj.battleship.length);
+  gameBoardObj.placeShip(5, 1, "horizontal", gameBoardObj.carrier.length);
+  gameBoardObj.receiveAttack(0, 0);
+  gameBoardObj.receiveAttack(1, 0);
+  gameBoardObj.receiveAttack(1, 1);
+  gameBoardObj.receiveAttack(2, 0);
+  gameBoardObj.receiveAttack(2, 1);
+  gameBoardObj.receiveAttack(2, 2);
+  gameBoardObj.receiveAttack(3, 0);
+  gameBoardObj.receiveAttack(3, 1);
+  gameBoardObj.receiveAttack(3, 2);
+  gameBoardObj.receiveAttack(3, 3);
+  gameBoardObj.receiveAttack(5, 1);
+  gameBoardObj.receiveAttack(5, 1);
+  gameBoardObj.receiveAttack(5, 2);
+  gameBoardObj.receiveAttack(5, 3);
+  gameBoardObj.receiveAttack(5, 4);
+  expect(gameBoardObj.checkIfAllShipsSunk()).toBe("All ships have sunk");
 });
