@@ -32,3 +32,26 @@ test("Place ship horizontaly on gameBoard", () => {
   gameBoardObj.placeShip(1, 0, "horizontal", newShip.length);
   expect(gameBoardObj.gameBoard[1].slice(0, 5)).toEqual([1, 1, 1, 1, 1]);
 });
+
+test("Place ship vertically on gameBoard", () => {
+  const gameBoardObj = new GameBoard();
+  const newShip = new Ship(5);
+  gameBoardObj.placeShip(1, 0, "vertical", newShip.length);
+  for (let i = 0; i < newShip.length; i++) {
+    expect(gameBoardObj.gameBoard[1][0]).toBe(1);
+    expect(gameBoardObj.gameBoard[1 + i][0]).toBe(1);
+  }
+});
+
+test("Check if ship is not placed on collision", () => {
+  const gameBoardObj = new GameBoard();
+  const firstShip = new Ship(5);
+  const secondShip = new Ship(3);
+  const thirdShip = new Ship(2);
+  gameBoardObj.placeShip(0, 0, "horizontal", firstShip.length);
+  gameBoardObj.placeShip(0, 0, "vertical", firstShip.length);
+  gameBoardObj.placeShip(0, 4, "horizontal", thirdShip.length);
+  expect(gameBoardObj.gameBoard[1][0]).toBe(0);
+  expect(gameBoardObj.gameBoard[0][6]).toBe(0);
+  expect(gameBoardObj.gameBoard[0][4]).toBe(1);
+});

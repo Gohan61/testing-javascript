@@ -18,7 +18,19 @@ export class GameBoard {
         this.gameBoard[x].fill(1, y, y + length);
       }
     }
-    if (this.gameBoard[x][y]) {
+    if (direction === "vertical") {
+      for (let i = 0; i < length; i++) {
+        if (this.gameBoard[x][y] === 1) {
+          break;
+        } else if (this.gameBoard[x + 1][y] === 1) {
+          break;
+        } else {
+          for (let i = 0; i < length; i++) {
+            this.gameBoard[x][y] = 1;
+            this.gameBoard[x + i][y] = 1;
+          }
+        }
+      }
     }
   }
 }
