@@ -1,5 +1,4 @@
 import { Ship } from ".";
-import { carrier, battleship, cruiser, destroyer, submarine } from "./index.js";
 
 export class GameBoard {
   constructor() {

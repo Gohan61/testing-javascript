@@ -1,11 +1,4 @@
-import {
-  Ship,
-  battleship,
-  carrier,
-  cruiser,
-  destroyer,
-  submarine,
-} from "./index.js";
+import { Ship } from "./index.js";
 import { GameBoard } from "./gameBoard.js";
 
 test("Times hit to be less than length of ship", () => {
