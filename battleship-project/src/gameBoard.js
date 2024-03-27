@@ -15,14 +15,14 @@ export class GameBoard {
   placeShip(x, y, direction, length) {
     if (direction === "horizontal") {
       if (this.gameBoard[x].slice(y, y + length).every((item) => item === 0)) {
-        this.gameBoard[x].fill(1, y, y + length);
+        this.gameBoard[x].fill(length, y, y + length);
       }
     }
     if (direction === "vertical") {
       if (this.checkIfBoardEmpty(x, y, length) === true) {
         for (let i = 0; i < length; i++) {
-          this.gameBoard[x][y] = 1;
-          this.gameBoard[x + i][y] = 1;
+          this.gameBoard[x][y] = length;
+          this.gameBoard[x + i][y] = length;
         }
       }
     }
@@ -30,9 +30,9 @@ export class GameBoard {
 
   checkIfBoardEmpty(x, y, length) {
     for (let i = 0; i < length; i++) {
-      if (this.gameBoard[x][y] === 1) {
+      if (this.gameBoard[x][y] !== 0) {
         return false;
-      } else if (this.gameBoard[x + i][y] === 1) {
+      } else if (this.gameBoard[x + i][y] !== 0) {
         return false;
       }
     }
