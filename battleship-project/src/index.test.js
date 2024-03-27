@@ -1,5 +1,6 @@
 import { Ship } from "./index.js";
 import { GameBoard } from "./gameBoard.js";
+import { Player } from "./player.js";
 
 test("Times hit to be less than length of ship", () => {
   const testShip = new Ship(5);
@@ -98,4 +99,19 @@ test("Check if all ships sunk", () => {
   gameBoardObj.receiveAttack(5, 3);
   gameBoardObj.receiveAttack(5, 4);
   expect(gameBoardObj.checkIfAllShipsSunk()).toBe("All ships have sunk");
+});
+
+test("Computer attacking player", () => {
+  const gameBoardObj = new GameBoard();
+  const playerObj = new Player(gameBoardObj);
+  playerObj.computerAttack();
+  const possibleAttacks = [1, 2, 3, 4, 5, "x"];
+
+  for (let i = 0; i < 10; i++) {
+    if (playerObj.enemy.gameBoard[i].every((item) => item !== 0)) {
+      expect(
+        possibleAttacks.some((x) => playerObj.enemy.gameBoard[i].includes(x))
+      ).toBe(true);
+    }
+  }
 });
