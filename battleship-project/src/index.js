@@ -8,24 +8,29 @@ export function gameLoop() {
   gameBoardComputer.newGameboard();
   gameBoardPlayer1.newGameboard();
 
-  const player1 = new Player(gameBoardComputer);
-  const computer = new Player(gameBoardPlayer1);
+  const player1 = new Player(gameBoardComputer, gameBoardPlayer1);
+  const computer = new Player(gameBoardPlayer1, gameBoardComputer);
 
-  player1.myTurn = true;
-
-  if (
-    gameBoardPlayer1.checkIfAllShipsSunk() ||
-    gameBoardComputer.checkIfAllShipsSunk()
-  ) {
-    return;
-  } else {
-    if ((player1.myTurn = true)) {
-      computer.myTurn = true;
-      player1.myTurn = false;
-    } else {
-      player1.myTurn = true;
-      computer.myTurn = false;
-    }
+  if (gameBoardPlayer1.myTurn === false) {
+    gameBoardPlayer1.myTurn = true;
+    gameBoardComputer.myTurn = false;
   }
-  return { player1, computer, gameBoardPlayer1, gameBoardComputer };
+
+  const checkIfGameOver = () => {
+    let winner = undefined;
+    if (gameBoardPlayer1.checkIfAllShipsSunk()) {
+      winner = "Computer wins";
+    } else if (gameBoardComputer.checkIfAllShipsSunk()) {
+      winner = "Player 1 wins";
+    }
+    return winner;
+  };
+
+  return {
+    player1,
+    computer,
+    gameBoardPlayer1,
+    gameBoardComputer,
+    checkIfGameOver,
+  };
 }

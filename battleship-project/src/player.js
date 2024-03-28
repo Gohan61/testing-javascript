@@ -1,34 +1,28 @@
 import { GameBoard } from "./gameBoard";
 
 export class Player {
-  constructor(enemy) {
+  constructor(enemy, ownBoard) {
     this.enemy = enemy;
-    this.myTurn = false;
+    this.ownBoard = ownBoard;
   }
 
   playerAttack(x, y) {
-    if (this.myTurn === true) {
-      this.enemy.receiveAttack(x, y);
-    }
+    this.enemy.receiveAttack(x, y);
+    this.ownBoard.changeTurn();
   }
 
   computerAttack() {
-    if (this.myTurn === true) {
-      const usedCoordinates = [];
-      let coordinate = Math.floor(Math.random() * 101);
+    const usedCoordinates = [];
+    let coordinate = Math.floor(Math.random() * 101);
 
-      while (usedCoordinates.includes(coordinate)) {
-        coordinate = Math.floor(Math.random() * 100);
-      }
-
-      let x = Number(coordinate.toString().split("")[0]);
-      let y = Number(coordinate.toString().split("")[1]);
-
-      this.enemy.receiveAttack(x, y);
+    while (usedCoordinates.includes(coordinate)) {
+      coordinate = Math.floor(Math.random() * 100);
     }
-  }
 
-  changeTurn() {
-    this.myTurn = true;
+    let x = Number(coordinate.toString().split("")[0]);
+    let y = Number(coordinate.toString().split("")[1]);
+
+    this.enemy.receiveAttack(x, y);
+    this.ownBoard.changeTurn();
   }
 }

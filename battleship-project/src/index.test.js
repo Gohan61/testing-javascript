@@ -86,33 +86,34 @@ test("Check if missed attack is registered", () => {
 test("Check if all ships sunk", () => {
   const gameBoardObj = new GameBoard();
   gameBoardObj.newGameboard();
+  const playerObj = new Player(gameBoardObj, gameBoardObj);
   gameBoardObj.placeShip(0, 0, "horizontal", gameBoardObj.destroyer.length);
   gameBoardObj.placeShip(1, 0, "horizontal", gameBoardObj.submarine.length);
   gameBoardObj.placeShip(2, 0, "horizontal", gameBoardObj.cruiser.length);
   gameBoardObj.placeShip(3, 0, "horizontal", gameBoardObj.battleship.length);
   gameBoardObj.placeShip(5, 1, "horizontal", gameBoardObj.carrier.length);
-  gameBoardObj.receiveAttack(0, 0);
-  gameBoardObj.receiveAttack(1, 0);
-  gameBoardObj.receiveAttack(1, 1);
-  gameBoardObj.receiveAttack(2, 0);
-  gameBoardObj.receiveAttack(2, 1);
-  gameBoardObj.receiveAttack(2, 2);
-  gameBoardObj.receiveAttack(3, 0);
-  gameBoardObj.receiveAttack(3, 1);
-  gameBoardObj.receiveAttack(3, 2);
-  gameBoardObj.receiveAttack(3, 3);
-  gameBoardObj.receiveAttack(5, 1);
-  gameBoardObj.receiveAttack(5, 1);
-  gameBoardObj.receiveAttack(5, 2);
-  gameBoardObj.receiveAttack(5, 3);
-  gameBoardObj.receiveAttack(5, 4);
-  expect(gameBoardObj.checkIfAllShipsSunk()).toBe("All ships have sunk");
+  playerObj.playerAttack(0, 0);
+  playerObj.playerAttack(1, 0);
+  playerObj.playerAttack(1, 1);
+  playerObj.playerAttack(2, 0);
+  playerObj.playerAttack(2, 1);
+  playerObj.playerAttack(2, 2);
+  playerObj.playerAttack(3, 0);
+  playerObj.playerAttack(3, 1);
+  playerObj.playerAttack(3, 2);
+  playerObj.playerAttack(3, 3);
+  playerObj.playerAttack(5, 1);
+  playerObj.playerAttack(5, 1);
+  playerObj.playerAttack(5, 2);
+  playerObj.playerAttack(5, 3);
+  playerObj.playerAttack(5, 4);
+  expect(gameBoardObj.checkIfAllShipsSunk()).toBe(true);
 });
 
 test("Computer attacking player", () => {
   const gameBoardObj = new GameBoard();
   gameBoardObj.newGameboard();
-  const playerObj = new Player(gameBoardObj);
+  const playerObj = new Player(gameBoardObj, gameBoardObj);
   playerObj.computerAttack();
   const possibleAttacks = [1, 2, 3, 4, 5, "x"];
 
@@ -128,7 +129,7 @@ test("Computer attacking player", () => {
 test("Computer does not generate same coordinate twice", () => {
   const gameBoardObj = new GameBoard();
   gameBoardObj.newGameboard();
-  const playerObj = new Player(gameBoardObj);
+  const playerObj = new Player(gameBoardObj, gameBoardObj);
   for (let i = 0; i < 100; i++) {
     playerObj.computerAttack();
   }
@@ -149,10 +150,74 @@ test("Game loops correctly between player and computer", () => {
   game.player1.playerAttack(0, 0);
   game.computer.computerAttack();
   game.computer.computerAttack();
-
   game.player1.playerAttack(1, 1);
-  console.log(game.gameBoardComputer.gameBoard);
-  console.log(game.gameBoardPlayer1.gameBoard);
 
   expect(game.gameBoardComputer.gameBoard[1][1]).toBe(1);
+});
+
+test("Game returns correct winner (player1)", () => {
+  const game = gameLoop();
+  game.gameBoardComputer.placeShip(
+    0,
+    0,
+    "horizontal",
+    game.gameBoardComputer.destroyer.length
+  );
+  game.gameBoardComputer.placeShip(
+    1,
+    0,
+    "horizontal",
+    game.gameBoardComputer.submarine.length
+  );
+  game.gameBoardComputer.placeShip(
+    2,
+    0,
+    "horizontal",
+    game.gameBoardComputer.cruiser.length
+  );
+  game.gameBoardComputer.placeShip(
+    3,
+    0,
+    "horizontal",
+    game.gameBoardComputer.battleship.length
+  );
+  game.gameBoardComputer.placeShip(
+    5,
+    1,
+    "horizontal",
+    game.gameBoardComputer.carrier.length
+  );
+
+  game.player1.playerAttack(0, 0);
+  game.computer.computerAttack();
+  game.player1.playerAttack(1, 0);
+  game.computer.computerAttack();
+  game.player1.playerAttack(1, 1);
+  game.computer.computerAttack();
+  game.player1.playerAttack(2, 0);
+  game.computer.computerAttack();
+  game.player1.playerAttack(2, 1);
+  game.computer.computerAttack();
+  game.player1.playerAttack(2, 2);
+  game.computer.computerAttack();
+  game.player1.playerAttack(3, 0);
+  game.computer.computerAttack();
+  game.player1.playerAttack(3, 1);
+  game.computer.computerAttack();
+  game.player1.playerAttack(3, 2);
+  game.computer.computerAttack();
+  game.player1.playerAttack(3, 3);
+  game.computer.computerAttack();
+  game.player1.playerAttack(5, 1);
+  game.computer.computerAttack();
+  game.player1.playerAttack(5, 1);
+  game.computer.computerAttack();
+  game.player1.playerAttack(5, 2);
+  game.computer.computerAttack();
+  game.player1.playerAttack(5, 3);
+  game.computer.computerAttack();
+  game.player1.playerAttack(5, 4);
+  game.checkIfGameOver();
+
+  expect(game.checkIfGameOver()).toBe("Player 1 wins");
 });

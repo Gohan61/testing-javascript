@@ -8,14 +8,17 @@ export class GameBoard {
     this.cruiser = new Ship(3);
     this.submarine = new Ship(2);
     this.destroyer = new Ship(1);
-    this.player1Turn = false;
-    this.computerTurn = false;
+    this.myTurn = false;
   }
   newGameboard = () => {
     for (let i = 0; i < 10; i++) {
       this.gameBoard.push(Array(10).fill(0));
     }
   };
+
+  changeTurn() {
+    this.myTurn = false;
+  }
 
   placeShip(x, y, direction, length) {
     if (direction === "horizontal") {
@@ -45,10 +48,14 @@ export class GameBoard {
   }
 
   receiveAttack(x, y) {
-    if (this.gameBoard[x][y] !== 0) {
-      this.checkShipType(x, y);
-    } else {
-      this.gameBoard[x][y] = "x";
+    if (this.myTurn === false) {
+      if (this.gameBoard[x][y] !== 0) {
+        this.checkShipType(x, y);
+      } else {
+        this.gameBoard[x][y] = "x";
+      }
+      this.myTurn = true;
+      this.checkIfAllShipsSunk();
     }
   }
 
@@ -80,7 +87,7 @@ export class GameBoard {
       this.submarine.isSunk() &&
       this.destroyer.isSunk()
     ) {
-      return "All ships have sunk";
+      return true;
     }
   }
 }
