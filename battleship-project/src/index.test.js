@@ -1,6 +1,7 @@
 import { Ship } from "./ship.js";
 import { GameBoard } from "./gameBoard.js";
 import { Player } from "./player.js";
+import { gameLoop } from "./index.js";
 
 test("Times hit to be less than length of ship", () => {
   const testShip = new Ship(5);
@@ -23,12 +24,14 @@ test("Ship is sunk when times hit equals length of ship", () => {
 
 test("Gameboard length is 10 by 10", () => {
   const gameBoardObj = new GameBoard();
+  gameBoardObj.newGameboard();
   expect(gameBoardObj.gameBoard.length).toBe(10);
   expect(gameBoardObj.gameBoard[0].length).toBe(10);
 });
 
 test("Place ship horizontaly on gameBoard", () => {
   const gameBoardObj = new GameBoard();
+  gameBoardObj.newGameboard();
   const newShip = new Ship(5);
   gameBoardObj.placeShip(1, 0, "horizontal", newShip.length);
   expect(gameBoardObj.gameBoard[1].slice(0, 5)).toEqual([5, 5, 5, 5, 5]);
@@ -36,6 +39,7 @@ test("Place ship horizontaly on gameBoard", () => {
 
 test("Place ship vertically on gameBoard", () => {
   const gameBoardObj = new GameBoard();
+  gameBoardObj.newGameboard();
   const newShip = new Ship(4);
   gameBoardObj.placeShip(1, 0, "vertical", newShip.length);
   for (let i = 0; i < newShip.length; i++) {
@@ -46,6 +50,7 @@ test("Place ship vertically on gameBoard", () => {
 
 test("Check if ship is not placed on collision", () => {
   const gameBoardObj = new GameBoard();
+  gameBoardObj.newGameboard();
   const firstShip = new Ship(5);
   const secondShip = new Ship(3);
   const thirdShip = new Ship(2);
@@ -64,6 +69,7 @@ test("Check if ship is not placed on collision", () => {
 
 test("Check if ship is hit", () => {
   const gameBoardObj = new GameBoard();
+  gameBoardObj.newGameboard();
   gameBoardObj.placeShip(0, 0, "horizontal", gameBoardObj.carrier.length);
   gameBoardObj.receiveAttack(0, 0);
   expect(gameBoardObj.carrier.timesHit).toBe(1);
@@ -71,6 +77,7 @@ test("Check if ship is hit", () => {
 
 test("Check if missed attack is registered", () => {
   const gameBoardObj = new GameBoard();
+  gameBoardObj.newGameboard();
   gameBoardObj.placeShip(0, 0, "vertical", gameBoardObj.battleship.length);
   gameBoardObj.receiveAttack(0, 1);
   expect(gameBoardObj.gameBoard[0][1]).toBe("x");
@@ -78,6 +85,7 @@ test("Check if missed attack is registered", () => {
 
 test("Check if all ships sunk", () => {
   const gameBoardObj = new GameBoard();
+  gameBoardObj.newGameboard();
   gameBoardObj.placeShip(0, 0, "horizontal", gameBoardObj.destroyer.length);
   gameBoardObj.placeShip(1, 0, "horizontal", gameBoardObj.submarine.length);
   gameBoardObj.placeShip(2, 0, "horizontal", gameBoardObj.cruiser.length);
@@ -103,6 +111,7 @@ test("Check if all ships sunk", () => {
 
 test("Computer attacking player", () => {
   const gameBoardObj = new GameBoard();
+  gameBoardObj.newGameboard();
   const playerObj = new Player(gameBoardObj);
   playerObj.computerAttack();
   const possibleAttacks = [1, 2, 3, 4, 5, "x"];
@@ -118,6 +127,7 @@ test("Computer attacking player", () => {
 
 test("Computer does not generate same coordinate twice", () => {
   const gameBoardObj = new GameBoard();
+  gameBoardObj.newGameboard();
   const playerObj = new Player(gameBoardObj);
   for (let i = 0; i < 100; i++) {
     playerObj.computerAttack();
@@ -126,4 +136,23 @@ test("Computer does not generate same coordinate twice", () => {
   for (let i = 0; i < 10; i++) {
     expect(playerObj.enemy.gameBoard[i].every((item) => item !== 0));
   }
+});
+
+test("Game loops correctly between player and computer", () => {
+  const game = gameLoop();
+  game.gameBoardComputer.placeShip(
+    1,
+    1,
+    "horizontal",
+    game.gameBoardComputer.destroyer.length
+  );
+  game.player1.playerAttack(0, 0);
+  game.computer.computerAttack();
+  game.computer.computerAttack();
+
+  game.player1.playerAttack(1, 1);
+  console.log(game.gameBoardComputer.gameBoard);
+  console.log(game.gameBoardPlayer1.gameBoard);
+
+  expect(game.gameBoardComputer.gameBoard[1][1]).toBe(1);
 });
