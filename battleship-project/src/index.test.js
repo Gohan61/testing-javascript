@@ -115,3 +115,15 @@ test("Computer attacking player", () => {
     }
   }
 });
+
+test("Computer does not generate same coordinate twice", () => {
+  const gameBoardObj = new GameBoard();
+  const playerObj = new Player(gameBoardObj);
+  for (let i = 0; i < 100; i++) {
+    playerObj.computerAttack();
+  }
+
+  for (let i = 0; i < 10; i++) {
+    expect(playerObj.enemy.gameBoard[i].every((item) => item !== 0));
+  }
+});
