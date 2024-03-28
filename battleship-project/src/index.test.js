@@ -209,6 +209,7 @@ test("Game returns correct winner (player1)", () => {
   game.player1.playerAttack(3, 3);
   game.computer.computerAttack();
   game.player1.playerAttack(5, 1);
+  game.checkIfGameOver();
   game.computer.computerAttack();
   game.player1.playerAttack(5, 1);
   game.computer.computerAttack();
@@ -217,6 +218,7 @@ test("Game returns correct winner (player1)", () => {
   game.player1.playerAttack(5, 3);
   game.computer.computerAttack();
   game.player1.playerAttack(5, 4);
+  game.computer.computerAttack();
   game.checkIfGameOver();
 
   expect(game.checkIfGameOver()).toBe("Player 1 wins");
