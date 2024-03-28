@@ -2,19 +2,19 @@ import { Ship } from "./ship.js";
 
 export class GameBoard {
   constructor() {
-    this.gameBoard = this.newGameboard();
+    this.gameBoard = [];
     this.carrier = new Ship(5);
     this.battleship = new Ship(4);
     this.cruiser = new Ship(3);
     this.submarine = new Ship(2);
     this.destroyer = new Ship(1);
+    this.player1Turn = false;
+    this.computerTurn = false;
   }
   newGameboard = () => {
-    const array = [];
     for (let i = 0; i < 10; i++) {
-      array.push(Array(10).fill(0));
+      this.gameBoard.push(Array(10).fill(0));
     }
-    return array;
   };
 
   placeShip(x, y, direction, length) {
