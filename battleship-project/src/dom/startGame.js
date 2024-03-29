@@ -36,7 +36,7 @@ export function newGame() {
     );
     placeShips(
       4,
-      0,
+      1,
       "vertical",
       "gameBoardComputer",
       ".computerGrid",
@@ -82,7 +82,7 @@ export function newGame() {
     );
     placeShips(
       4,
-      0,
+      5,
       "vertical",
       "gameBoardPlayer1",
       ".playerGrid",
@@ -139,12 +139,17 @@ function placeShips(x, y, direction, board, grid, ship, game) {
     if (x >= 6 && shipLength + x > 10) {
       statusbar.textContent = "Ship does not fit board";
     } else {
-      for (let i = 1; i < shipLength + 1; i++) {
-        let increment = Number(`${i}0`);
-        const element = document.querySelector(
+      const element1 = document.querySelector(
+        `${grid} div:nth-child(${nodePoint + 1})`
+      );
+      for (let i = 2; i < shipLength + 1; i++) {
+        let increment = Number(`${i}0` - 10);
+
+        const element2 = document.querySelector(
           `${grid} div:nth-child(${nodePoint + increment + 1})`
         );
-        colorShips(element, ship);
+        colorShips(element1, ship);
+        colorShips(element2, ship);
         game[board].placeShip(x, y, direction, game[board][ship].length);
       }
     }
@@ -183,6 +188,8 @@ export function attack(game) {
       const y = Number(itemToAttack[1]);
 
       game.player1.playerAttack(x, y);
+      setTimeout(game.computer.computerAttack(), 1000);
+      console.log(game.gameBoardComputer);
     });
   });
 }
