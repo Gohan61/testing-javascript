@@ -188,8 +188,13 @@ export function attack(game) {
       const y = Number(itemToAttack[1]);
 
       game.player1.playerAttack(x, y);
+      if (game.checkIfGameOver()) {
+        statusbar.textContent = game.checkIfGameOver();
+      }
       setTimeout(game.computer.computerAttack(), 1000);
-      console.log(game.gameBoardComputer);
+      if (game.checkIfGameOver()) {
+        statusbar.textContent = game.checkIfGameOver();
+      }
     });
   });
 }
