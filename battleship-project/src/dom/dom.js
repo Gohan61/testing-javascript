@@ -27,13 +27,15 @@ export const computerGridElements =
 function hover(element) {
   element.forEach((div) => {
     div.addEventListener("mouseover", (color) => {
-      color.currentTarget.style.backgroundColor = "blue";
+      color.currentTarget.style.border = "blue 1px solid";
+      color.currentTarget.style.boxShadow = "inset #dde0ee 15px 15px 15px";
     });
   });
 
   element.forEach((div) => {
     div.addEventListener("mouseout", (color) => {
-      color.currentTarget.style.backgroundColor = "";
+      color.currentTarget.style.border = "";
+      color.currentTarget.style.boxShadow = "";
     });
   });
 }
