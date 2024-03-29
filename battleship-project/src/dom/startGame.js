@@ -6,16 +6,6 @@ import { statusbar } from "./dom";
 export function newGame() {
   newGameButton.addEventListener("click", () => {
     const newGame = gameLoop();
-
-    placeShips(
-      8,
-      8,
-      "vertical",
-      "gameBoardComputer",
-      ".computerGrid",
-      "cruiser",
-      newGame
-    );
   });
 }
 
@@ -56,6 +46,14 @@ function placeShips(x, y, direction, board, grid, ship, game) {
     if (x >= 6 && shipLength + x > 10) {
       statusbar.textContent = "Ship does not fit board";
     } else {
+      for (let i = 1; i < shipLength + 1; i++) {
+        let increment = Number(`${i}0`);
+        const element = document.querySelector(
+          `${grid} div:nth-child(${nodePoint + increment})`
+        );
+        colorShips(element, ship);
+        game[board].placeShip(x, y, direction, game[board][ship].length);
+      }
     }
   }
 }
