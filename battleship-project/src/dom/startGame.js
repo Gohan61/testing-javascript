@@ -6,6 +6,52 @@ import { statusbar } from "./dom";
 export function newGame() {
   newGameButton.addEventListener("click", () => {
     const newGame = gameLoop();
+
+    placeShips(
+      0,
+      0,
+      "horizontal",
+      "gameBoardComputer",
+      ".computerGrid",
+      "carrier",
+      newGame
+    );
+    placeShips(
+      1,
+      0,
+      "horizontal",
+      "gameBoardComputer",
+      ".computerGrid",
+      "battleship",
+      newGame
+    );
+    placeShips(
+      3,
+      0,
+      "horizontal",
+      "gameBoardComputer",
+      ".computerGrid",
+      "cruiser",
+      newGame
+    );
+    placeShips(
+      4,
+      0,
+      "vertical",
+      "gameBoardComputer",
+      ".computerGrid",
+      "submarine",
+      newGame
+    );
+    placeShips(
+      7,
+      6,
+      "horizontal",
+      "gameBoardComputer",
+      ".computerGrid",
+      "destroyer",
+      newGame
+    );
   });
 }
 
@@ -15,7 +61,7 @@ function placeShips(x, y, direction, board, grid, ship, game) {
 
   if (ship === "destroyer") {
     const element = document.querySelector(
-      `${grid} div:nth-child(${y + shipLength})`
+      `${grid} div:nth-child(${nodePoint + 1})`
     );
 
     colorShips(element, ship);
@@ -48,8 +94,9 @@ function placeShips(x, y, direction, board, grid, ship, game) {
     } else {
       for (let i = 1; i < shipLength + 1; i++) {
         let increment = Number(`${i}0`);
+        console.log(increment);
         const element = document.querySelector(
-          `${grid} div:nth-child(${nodePoint + increment})`
+          `${grid} div:nth-child(${nodePoint + increment + 1})`
         );
         colorShips(element, ship);
         game[board].placeShip(x, y, direction, game[board][ship].length);
