@@ -52,6 +52,53 @@ export function newGame() {
       "destroyer",
       newGame
     );
+
+    placeShips(
+      0,
+      0,
+      "horizontal",
+      "gameBoardPlayer1",
+      ".playerGrid",
+      "carrier",
+      newGame
+    );
+    placeShips(
+      1,
+      0,
+      "horizontal",
+      "gameBoardPlayer1",
+      ".playerGrid",
+      "battleship",
+      newGame
+    );
+    placeShips(
+      3,
+      0,
+      "horizontal",
+      "gameBoardPlayer1",
+      ".playerGrid",
+      "cruiser",
+      newGame
+    );
+    placeShips(
+      4,
+      0,
+      "vertical",
+      "gameBoardPlayer1",
+      ".playerGrid",
+      "submarine",
+      newGame
+    );
+    placeShips(
+      7,
+      6,
+      "horizontal",
+      "gameBoardPlayer1",
+      ".playerGrid",
+      "destroyer",
+      newGame
+    );
+    attack(newGame);
   });
 }
 
@@ -94,7 +141,6 @@ function placeShips(x, y, direction, board, grid, ship, game) {
     } else {
       for (let i = 1; i < shipLength + 1; i++) {
         let increment = Number(`${i}0`);
-        console.log(increment);
         const element = document.querySelector(
           `${grid} div:nth-child(${nodePoint + increment + 1})`
         );
@@ -124,4 +170,19 @@ function colorShips(element, ship) {
     case ship === "destroyer":
       element.style.backgroundColor = destroyer;
   }
+}
+
+export function attack(game) {
+  let itemToAttack = undefined;
+
+  computerGridElements.forEach((item) => {
+    item.addEventListener("click", () => {
+      itemToAttack = item.getAttribute("data");
+      itemToAttack = itemToAttack.split("");
+      const x = Number(itemToAttack[0]);
+      const y = Number(itemToAttack[1]);
+
+      game.player1.playerAttack(x, y);
+    });
+  });
 }
