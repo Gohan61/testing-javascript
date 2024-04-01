@@ -170,14 +170,19 @@ function colorShips(element, ship) {
   switch (true) {
     case ship === "carrier":
       element.style.backgroundColor = carrier;
+      break;
     case ship === "battleship":
       element.style.backgroundColor = battleship;
+      break;
     case ship === "cruiser":
       element.style.backgroundColor = cruiser;
+      break;
     case ship === "submarine":
       element.style.backgroundColor = submarine;
+      break;
     case ship === "destroyer":
       element.style.backgroundColor = destroyer;
+      break;
   }
 }
 
