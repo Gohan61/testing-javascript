@@ -23,6 +23,7 @@ createGrid(playerBoard);
 
 export const computerGridElements =
   document.querySelectorAll(".computerGrid div");
+export const playerGridElements = document.querySelectorAll(".playerGrid div");
 
 function hover(element) {
   element.forEach((div) => {

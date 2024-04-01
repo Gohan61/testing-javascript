@@ -1,7 +1,9 @@
 import { newGameButton } from "./dom";
 import { gameLoop } from "..";
 import { computerGridElements } from "./dom";
+import { playerGridElements } from "./dom";
 import { statusbar } from "./dom";
+import { randomize } from "./randomize";
 
 let newGame = undefined;
 
@@ -9,104 +11,20 @@ export function startNewGame() {
   newGameButton.addEventListener("click", () => {
     newGame = gameLoop();
     remove();
-
-    placeShips(
-      0,
-      0,
-      "horizontal",
-      "gameBoardComputer",
-      ".computerGrid",
-      "carrier",
-      newGame
+    computerGridElements.forEach(
+      (element) => (element.style.backgroundColor = "")
     );
-    placeShips(
-      1,
-      0,
-      "horizontal",
-      "gameBoardComputer",
-      ".computerGrid",
-      "battleship",
-      newGame
-    );
-    placeShips(
-      3,
-      0,
-      "horizontal",
-      "gameBoardComputer",
-      ".computerGrid",
-      "cruiser",
-      newGame
-    );
-    placeShips(
-      4,
-      1,
-      "vertical",
-      "gameBoardComputer",
-      ".computerGrid",
-      "submarine",
-      newGame
-    );
-    placeShips(
-      7,
-      6,
-      "horizontal",
-      "gameBoardComputer",
-      ".computerGrid",
-      "destroyer",
-      newGame
+    playerGridElements.forEach(
+      (element) => (element.style.backgroundColor = "")
     );
 
-    placeShips(
-      0,
-      0,
-      "horizontal",
-      "gameBoardPlayer1",
-      ".playerGrid",
-      "carrier",
-      newGame
-    );
-    placeShips(
-      1,
-      0,
-      "horizontal",
-      "gameBoardPlayer1",
-      ".playerGrid",
-      "battleship",
-      newGame
-    );
-    placeShips(
-      3,
-      0,
-      "horizontal",
-      "gameBoardPlayer1",
-      ".playerGrid",
-      "cruiser",
-      newGame
-    );
-    placeShips(
-      4,
-      5,
-      "vertical",
-      "gameBoardPlayer1",
-      ".playerGrid",
-      "submarine",
-      newGame
-    );
-    placeShips(
-      7,
-      6,
-      "horizontal",
-      "gameBoardPlayer1",
-      ".playerGrid",
-      "destroyer",
-      newGame
-    );
+    const random = randomize(newGame);
 
     addListener();
   });
 }
 
-function placeShips(x, y, direction, board, grid, ship, game) {
+export function placeShips(x, y, direction, board, grid, ship, game) {
   const shipLength = game[board][ship].length;
   const nodePoint = Number(`${x}${y}`);
 
