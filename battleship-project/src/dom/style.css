@@ -6,6 +6,8 @@ body {
 
 .gameContainer {
   display: grid;
+  grid-template-columns: 1fr 1fr;
+  justify-items: center;
 }
 
 .computerGrid,
@@ -22,4 +24,12 @@ body {
   width: 100%;
   height: 100%;
   border: 1px solid black;
+}
+
+.gameButtons {
+  padding: 10%;
+  grid-area: 2 / 2;
+  display: flex;
+  justify-content: space-between;
+  width: 50%;
 }
