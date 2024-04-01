@@ -1,7 +1,7 @@
 import "./style.css";
 import { newGame, startNewGame } from "./startGame";
 
-const computerBoard = document.querySelector(".computerGrid");
+export const computerBoard = document.querySelector(".computerGrid");
 const playerBoard = document.querySelector(".playerGrid");
 export const newGameButton = document.querySelector(".newGame");
 export const statusbar = document.querySelector(".statusBar");
@@ -39,6 +39,13 @@ function hover(element) {
       color.currentTarget.style.boxShadow = "";
     });
   });
+}
+
+export function placeXonScreen(item) {
+  const clickedDiv = document.querySelector(
+    `div.computerGrid [data="${item}"]`
+  );
+  clickedDiv.textContent = "x";
 }
 
 hover(computerGridElements);

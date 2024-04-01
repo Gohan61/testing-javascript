@@ -4,6 +4,8 @@ import { computerGridElements } from "./dom";
 import { playerGridElements } from "./dom";
 import { statusbar } from "./dom";
 import { randomize } from "./randomize";
+import { computerBoard } from "./dom";
+import { placeXonScreen } from "./dom";
 
 let newGame = undefined;
 
@@ -11,9 +13,10 @@ export function startNewGame() {
   newGameButton.addEventListener("click", () => {
     newGame = gameLoop();
     remove();
-    computerGridElements.forEach(
-      (element) => (element.style.backgroundColor = "")
-    );
+    computerGridElements.forEach((element) => {
+      element.style.backgroundColor = "";
+      element.textContent = "";
+    });
     playerGridElements.forEach(
       (element) => (element.style.backgroundColor = "")
     );
@@ -105,6 +108,7 @@ function colorShips(element, ship) {
 }
 
 export function attack(game, item) {
+  placeXonScreen(item);
   const itemToAttack = item.split("");
   const x = Number(itemToAttack[0]);
   const y = Number(itemToAttack[1]);
