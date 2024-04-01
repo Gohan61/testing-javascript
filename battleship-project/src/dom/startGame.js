@@ -3,9 +3,12 @@ import { gameLoop } from "..";
 import { computerGridElements } from "./dom";
 import { statusbar } from "./dom";
 
-export function newGame() {
+let newGame = undefined;
+
+export function startNewGame() {
   newGameButton.addEventListener("click", () => {
-    const newGame = gameLoop();
+    newGame = gameLoop();
+    remove();
 
     placeShips(
       0,
@@ -98,7 +101,8 @@ export function newGame() {
       "destroyer",
       newGame
     );
-    attack(newGame);
+
+    addListener();
   });
 }
 
@@ -177,24 +181,36 @@ function colorShips(element, ship) {
   }
 }
 
-export function attack(game) {
-  let itemToAttack = undefined;
+export function attack(game, item) {
+  const itemToAttack = item.split("");
+  const x = Number(itemToAttack[0]);
+  const y = Number(itemToAttack[1]);
 
+  game.player1.playerAttack(x, y);
+  if (game.checkIfGameOver()) {
+    statusbar.textContent = game.checkIfGameOver();
+  }
+  setTimeout(game.computer.computerAttack(), 1000);
+  if (game.checkIfGameOver()) {
+    statusbar.textContent = game.checkIfGameOver();
+    remove();
+  }
+}
+
+function addListener() {
   computerGridElements.forEach((item) => {
-    item.addEventListener("click", () => {
-      itemToAttack = item.getAttribute("data");
-      itemToAttack = itemToAttack.split("");
-      const x = Number(itemToAttack[0]);
-      const y = Number(itemToAttack[1]);
+    item.addEventListener("click", wait);
+  });
+}
 
-      game.player1.playerAttack(x, y);
-      if (game.checkIfGameOver()) {
-        statusbar.textContent = game.checkIfGameOver();
-      }
-      setTimeout(game.computer.computerAttack(), 1000);
-      if (game.checkIfGameOver()) {
-        statusbar.textContent = game.checkIfGameOver();
-      }
-    });
+function wait(item) {
+  const itemToAttack = item.target.getAttribute("data");
+
+  attack(newGame, itemToAttack);
+}
+
+function remove() {
+  computerGridElements.forEach((item) => {
+    item.removeEventListener("click", wait);
   });
 }

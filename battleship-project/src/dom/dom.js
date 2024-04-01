@@ -1,5 +1,5 @@
 import "./style.css";
-import { newGame } from "./startGame";
+import { newGame, startNewGame } from "./startGame";
 
 const computerBoard = document.querySelector(".computerGrid");
 const playerBoard = document.querySelector(".playerGrid");
@@ -42,4 +42,4 @@ function hover(element) {
 
 hover(computerGridElements);
 
-const newG = newGame();
+export const newGameObj = startNewGame();
