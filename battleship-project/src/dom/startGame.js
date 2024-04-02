@@ -21,6 +21,7 @@ export function startNewGame() {
       element.style.backgroundColor = "";
       element.textContent = "";
     });
+    statusbar.textContent = "";
 
     const random = randomize(newGame);
 
