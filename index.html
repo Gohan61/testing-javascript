@@ -4,6 +4,27 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Project: Battleship</title>
-  <script defer src="runtime.bundle.js"></script><script defer src="index.bundle.js"></script></head>
-  <body></body>
+  <script defer src="runtime.bundle.js"></script><script defer src="index.bundle.js"></script><script defer src="dom.bundle.js"></script></head>
+  <body>
+    <h1>Prepare for Battleship</h1>
+
+    <main>
+      <div class="gameContainer">
+        <div class="playerBoard">
+          <div class="playerGrid"></div>
+          <p>Your grid</p>
+        </div>
+        <div class="computerBoard">
+          <div class="computerGrid"></div>
+          <p>Computers grid</p>
+        </div>
+        <div class="statusBar"></div>
+        <div class="gameButtons">
+          <button class="newGame">Start new game</button>
+          <p>(press again for new layout)</p>
+        </div>
+      </div>
+    </main>
+    <footer></footer>
+  </body>
 </html>
