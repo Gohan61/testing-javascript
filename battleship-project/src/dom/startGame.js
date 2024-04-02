@@ -127,8 +127,6 @@ export function attack(game, item) {
       remove();
     }
   }
-  console.log(game.gameBoardPlayer1);
-  console.log(game.gameBoardComputer);
 }
 
 function addListener() {
