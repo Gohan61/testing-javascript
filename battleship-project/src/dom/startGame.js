@@ -17,9 +17,10 @@ export function startNewGame() {
       element.style.backgroundColor = "";
       element.textContent = "";
     });
-    playerGridElements.forEach(
-      (element) => (element.style.backgroundColor = "")
-    );
+    playerGridElements.forEach((element) => {
+      element.style.backgroundColor = "";
+      element.textContent = "";
+    });
 
     const random = randomize(newGame);
 
