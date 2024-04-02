@@ -29,6 +29,11 @@ h1 {
   grid-template-rows: repeat(10, 1fr);
 }
 
+.computerBoard,
+.playerBoard {
+  text-align: center;
+}
+
 .computerGrid div,
 .playerGrid div {
   width: 100%;

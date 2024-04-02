@@ -21,7 +21,7 @@ export function gameLoop() {
     if (gameBoardPlayer1.checkIfAllShipsSunk()) {
       winner = "Computer wins";
     } else if (gameBoardComputer.checkIfAllShipsSunk()) {
-      winner = "Player 1 wins";
+      winner = "You win!";
     }
     return winner;
   };
