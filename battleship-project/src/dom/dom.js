@@ -41,10 +41,14 @@ function hover(element) {
   });
 }
 
-export function placeXonScreen(item) {
-  const clickedDiv = document.querySelector(
-    `div.computerGrid [data="${item}"]`
-  );
+export function placeXonScreen(item, grid) {
+  let clickedDiv = undefined;
+  let itemNum = Number(item);
+  if (itemNum < 10) {
+    clickedDiv = document.querySelector(`div.${grid} [data="0${itemNum}"]`);
+  } else {
+    clickedDiv = document.querySelector(`div.${grid} [data="${itemNum}"]`);
+  }
   clickedDiv.textContent = "x";
 }
 

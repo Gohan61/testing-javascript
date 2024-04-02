@@ -108,7 +108,7 @@ function colorShips(element, ship) {
 }
 
 export function attack(game, item) {
-  placeXonScreen(item);
+  placeXonScreen(item, "computerGrid");
   const itemToAttack = item.split("");
   const x = Number(itemToAttack[0]);
   const y = Number(itemToAttack[1]);
@@ -117,7 +117,9 @@ export function attack(game, item) {
   if (game.checkIfGameOver()) {
     statusbar.textContent = game.checkIfGameOver();
   }
-  setTimeout(game.computer.computerAttack(), 1000);
+  const coordinateComputerAttack = game.computer.computerAttack();
+
+  placeXonScreen(coordinateComputerAttack, "playerGrid");
   if (game.checkIfGameOver()) {
     statusbar.textContent = game.checkIfGameOver();
     remove();

@@ -4,6 +4,7 @@ export class Player {
   constructor(enemy, ownBoard) {
     this.enemy = enemy;
     this.ownBoard = ownBoard;
+    this.usedCoordinates = [];
   }
 
   playerAttack(x, y) {
@@ -12,17 +13,19 @@ export class Player {
   }
 
   computerAttack() {
-    const usedCoordinates = [];
-    let coordinate = Math.floor(Math.random() * 101);
+    let coordinate = Math.floor(Math.random() * 100);
 
-    while (usedCoordinates.includes(coordinate)) {
+    while (this.usedCoordinates.includes(coordinate)) {
       coordinate = Math.floor(Math.random() * 100);
     }
+    this.usedCoordinates.push(coordinate);
 
     let x = Number(coordinate.toString().split("")[0]);
     let y = Number(coordinate.toString().split("")[1]);
 
     this.enemy.receiveAttack(x, y);
     this.ownBoard.changeTurn();
+
+    return coordinate;
   }
 }
