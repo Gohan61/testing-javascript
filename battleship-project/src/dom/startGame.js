@@ -37,8 +37,9 @@ export function placeShips(x, y, direction, board, grid, ship, game) {
     const element = document.querySelector(
       `${grid} div:nth-child(${nodePoint + 1})`
     );
-
-    colorShips(element, ship);
+    if (board === "gameBoardPlayer1") {
+      colorShips(element, ship);
+    }
     game[board].placeShip(x, y, direction, game[board][ship].length);
   } else if (direction === "horizontal") {
     if (y >= 6 && shipLength + y > 10) {
@@ -49,7 +50,9 @@ export function placeShips(x, y, direction, board, grid, ship, game) {
           const element = document.querySelector(
             `${grid} div:nth-child(${y + i})`
           );
-          colorShips(element, ship);
+          if (board === "gameBoardPlayer1") {
+            colorShips(element, ship);
+          }
           game[board].placeShip(x, y, direction, game[board][ship].length);
         }
       } else {
@@ -57,7 +60,9 @@ export function placeShips(x, y, direction, board, grid, ship, game) {
           const element = document.querySelector(
             `${grid} div:nth-child(${nodePoint + i})`
           );
-          colorShips(element, ship);
+          if (board === "gameBoardPlayer1") {
+            colorShips(element, ship);
+          }
           game[board].placeShip(x, y, direction, game[board][ship].length);
         }
       }
@@ -75,8 +80,10 @@ export function placeShips(x, y, direction, board, grid, ship, game) {
         const element2 = document.querySelector(
           `${grid} div:nth-child(${nodePoint + increment + 1})`
         );
-        colorShips(element1, ship);
-        colorShips(element2, ship);
+        if (board === "gameBoardPlayer1") {
+          colorShips(element1, ship);
+          colorShips(element2, ship);
+        }
         game[board].placeShip(x, y, direction, game[board][ship].length);
       }
     }
@@ -109,6 +116,47 @@ function colorShips(element, ship) {
   }
 }
 
+function colorComputerShips(game) {
+  game.gameBoardComputer.gameBoard.forEach((row, index) => {
+    for (let i = 0; i < 10; i++) {
+      let div = undefined;
+
+      switch (true) {
+        case row[i] === 5:
+          div = document.querySelector(
+            `div.computerGrid [data="${index}${i}"]`
+          );
+          colorShips(div, "carrier");
+          break;
+        case row[i] === 4:
+          div = document.querySelector(
+            `div.computerGrid [data="${index}${i}"]`
+          );
+          colorShips(div, "battleship");
+          break;
+        case row[i] === 3:
+          div = document.querySelector(
+            `div.computerGrid [data="${index}${i}"]`
+          );
+          colorShips(div, "cruiser");
+          break;
+        case row[i] === 2:
+          div = document.querySelector(
+            `div.computerGrid [data="${index}${i}"]`
+          );
+          colorShips(div, "submarine");
+          break;
+        case row[i] === 1:
+          div = document.querySelector(
+            `div.computerGrid [data="${index}${i}"]`
+          );
+          colorShips(div, "destroyer");
+          break;
+      }
+    }
+  });
+}
+
 export function attack(game, item) {
   placeXonScreen(item, "computerGrid");
   const itemToAttack = item.split("");
@@ -119,12 +167,14 @@ export function attack(game, item) {
     game.player1.playerAttack(x, y);
     if (game.checkIfGameOver()) {
       statusbar.textContent = game.checkIfGameOver();
+      colorComputerShips(game);
     }
     const coordinateComputerAttack = game.computer.computerAttack();
 
     placeXonScreen(coordinateComputerAttack, "playerGrid");
     if (game.checkIfGameOver()) {
       statusbar.textContent = game.checkIfGameOver();
+      colorComputerShips(game);
       remove();
     }
   }

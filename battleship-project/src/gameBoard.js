@@ -51,7 +51,6 @@ export class GameBoard {
     if (this.myTurn === false) {
       if (this.gameBoard[x][y] !== 0) {
         this.checkShipType(x, y);
-        this.gameBoard[x][y] = "x";
       } else {
         this.gameBoard[x][y] = "x";
       }
