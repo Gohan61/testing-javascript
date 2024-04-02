@@ -113,17 +113,21 @@ export function attack(game, item) {
   const x = Number(itemToAttack[0]);
   const y = Number(itemToAttack[1]);
 
-  game.player1.playerAttack(x, y);
-  if (game.checkIfGameOver()) {
-    statusbar.textContent = game.checkIfGameOver();
-  }
-  const coordinateComputerAttack = game.computer.computerAttack();
+  if (game.gameBoardComputer.gameBoard[x][y] !== "x") {
+    game.player1.playerAttack(x, y);
+    if (game.checkIfGameOver()) {
+      statusbar.textContent = game.checkIfGameOver();
+    }
+    const coordinateComputerAttack = game.computer.computerAttack();
 
-  placeXonScreen(coordinateComputerAttack, "playerGrid");
-  if (game.checkIfGameOver()) {
-    statusbar.textContent = game.checkIfGameOver();
-    remove();
+    placeXonScreen(coordinateComputerAttack, "playerGrid");
+    if (game.checkIfGameOver()) {
+      statusbar.textContent = game.checkIfGameOver();
+      remove();
+    }
   }
+  console.log(game.gameBoardPlayer1);
+  console.log(game.gameBoardComputer);
 }
 
 function addListener() {

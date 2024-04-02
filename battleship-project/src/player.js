@@ -23,7 +23,13 @@ export class Player {
     let x = Number(coordinate.toString().split("")[0]);
     let y = Number(coordinate.toString().split("")[1]);
 
-    this.enemy.receiveAttack(x, y);
+    if (coordinate < 10) {
+      this.enemy.receiveAttack(0, x);
+    } else if (coordinate === 10) {
+      this.enemy.receiveAttack(1, 0);
+    } else {
+      this.enemy.receiveAttack(x, y);
+    }
     this.ownBoard.changeTurn();
 
     return coordinate;
